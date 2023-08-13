@@ -22,6 +22,8 @@ class chatPage extends StatelessWidget {
     //username
     Map<String, dynamic> data =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    bool isLandScape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
     final width = MediaQuery.of(context).size.width;
     if (getOs() == 'android') {
       return Scaffold(
@@ -81,7 +83,9 @@ class chatPage extends StatelessWidget {
             ),
             //field ->type a messsage
             Padding(
-              padding: const EdgeInsets.all(12),
+              padding: isLandScape
+                  ? const EdgeInsets.symmetric(vertical: 3, horizontal: 5)
+                  : const EdgeInsets.all(10),
               child: adabtiveTextField(
                 hint: 'Type a message',
                 textController: _textController,
