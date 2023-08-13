@@ -25,7 +25,7 @@ class adabtiveButton extends StatelessWidget {
     if (getOs() == 'android') {
       return InkWell(
         onTap: on_tap,
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(50),
         child: Container(
           height: height,
           width: width,

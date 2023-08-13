@@ -16,7 +16,7 @@ class adabtiveTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     if (getOs() == "android") {
       return TextField(
-        maxLength: 10,
+        maxLength: 250,
         minLines: 1,
         controller: textController,
         decoration: InputDecoration(
@@ -51,7 +51,7 @@ class adabtiveTextField extends StatelessWidget {
       return CupertinoTextField(
         controller: textController,
         placeholder: 'Type a message',
-        maxLines: 10,
+        maxLines: 250,
         minLines: 1,
         suffix: suffixIcon,
         decoration: BoxDecoration(
