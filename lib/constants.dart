@@ -9,6 +9,4 @@ String kMessages = "messages";
 String kMessage = "message";
 String kId = "email";
 String createdAt = 'createdAt';
-String getOs() {
-  return Platform.operatingSystem;
-}
+String getOs() => Platform.operatingSystem;

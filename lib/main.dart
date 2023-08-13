@@ -1,8 +1,8 @@
-import 'package:chat_with_flutter/constants.dart';
-import 'package:chat_with_flutter/firebase_options.dart';
-import 'package:chat_with_flutter/screens/chatPage.dart';
-import 'package:chat_with_flutter/screens/login.dart';
-import 'package:chat_with_flutter/screens/register.dart';
+import 'constants.dart';
+import 'firebase_options.dart';
+import 'screens/chatPage.dart';
+import 'screens/login.dart';
+import 'screens/register.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

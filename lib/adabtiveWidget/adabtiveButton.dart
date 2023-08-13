@@ -1,6 +1,7 @@
-import 'package:chat_with_flutter/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../constants.dart';
 
 class adabtiveButton extends StatelessWidget {
   const adabtiveButton({
@@ -24,6 +25,7 @@ class adabtiveButton extends StatelessWidget {
     if (getOs() == 'android') {
       return InkWell(
         onTap: on_tap,
+        borderRadius: BorderRadius.circular(30),
         child: Container(
           height: height,
           width: width,

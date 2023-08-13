@@ -1,5 +1,5 @@
-import 'package:chat_with_flutter/adabtiveWidget/adabtiveButton.dart';
-import 'package:chat_with_flutter/constants.dart';
+import '../../adabtiveWidget/adabtiveButton.dart';
+import '../../constants.dart';
 import 'package:flutter/material.dart';
 
 class customButton extends StatelessWidget {

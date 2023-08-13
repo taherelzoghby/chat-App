@@ -1,10 +1,9 @@
-import 'package:chat_with_flutter/adabtiveWidget/adabtiveButton.dart';
-import 'package:chat_with_flutter/adabtiveWidget/adabtiveCircularIndicator.dart';
-import 'package:chat_with_flutter/adabtiveWidget/adabtiveTextField.dart';
-import 'package:chat_with_flutter/constants.dart';
-import 'package:chat_with_flutter/screens/login.dart';
-import 'package:chat_with_flutter/screens/widgets/chatBubbForFriends.dart';
-import 'package:chat_with_flutter/screens/widgets/chatBubble.dart';
+import '../adabtiveWidget/adabtiveCircularIndicator.dart';
+import '../adabtiveWidget/adabtiveTextField.dart';
+import '../constants.dart';
+import 'login.dart';
+import 'widgets/chatBubbForFriends.dart';
+import 'widgets/chatBubble.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

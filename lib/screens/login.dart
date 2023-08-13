@@ -1,11 +1,10 @@
-import 'package:chat_with_flutter/adabtiveWidget/adabtiveEmptyButton.dart';
-import 'package:chat_with_flutter/constants.dart';
-import 'package:chat_with_flutter/firebaseHelp.dart/firebaseHelp.dart';
-import 'package:chat_with_flutter/screens/chatPage.dart';
-import 'package:chat_with_flutter/screens/register.dart';
-import 'package:chat_with_flutter/screens/widgets/customButton.dart';
-import 'package:chat_with_flutter/screens/widgets/customTextFormField.dart';
-import 'package:chat_with_flutter/screens/widgets/showSnack.dart';
+import 'package:chat_with_flutter/screens/widgets/user_dont_have_an_account.dart';
+import '../constants.dart';
+import '../firebaseHelp.dart/firebaseHelp.dart';
+import 'chatPage.dart';
+import 'widgets/customButton.dart';
+import 'widgets/customTextFormField.dart';
+import 'widgets/showSnack.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +22,7 @@ class loginPage extends StatefulWidget {
 
 class _loginPageState extends State<loginPage> {
   //unique global key for form
-  final GlobalKey<FormState> _key = GlobalKey<FormState>();
+  final _key = GlobalKey<FormState>();
   //email and password fields
   String email = '';
   String password = '';
@@ -61,74 +60,27 @@ class _loginPageState extends State<loginPage> {
                         //name
                         customTextField(
                           hint: 'Name',
-                          on_changed: (String value) {
-                            name = value;
-                          },
+                          on_changed: (String value) => name = value,
                         ),
                         //email
                         customTextField(
                           hint: 'Email',
-                          on_changed: (String value) {
-                            email = value;
-                          },
+                          on_changed: (String value) => email = value,
                         ),
                         //password
                         customTextField(
                           hint: 'Password',
-                          on_changed: (String value) {
-                            password = value;
-                          },
+                          on_changed: (String value) => password = value,
                         ),
                         //login button
                         customButton(
                           height: height,
-                          on_tap: () async {
-                            if (_key.currentState!.validate()) {
-                              setState(() => isLoading = true);
-                              try {
-                                await signInUser(email, password);
-                                showSnack(context, 'Register Success');
-                                Navigator.of(context).pushReplacementNamed(
-                                  chatPage.id,
-                                  arguments: {'name': name, kId: email},
-                                );
-                              } on FirebaseAuthException catch (e) {
-                                if (e.code == 'user-not-found') {
-                                  showSnack(
-                                      context, 'No user found for that email');
-                                } else if (e.code == 'wrong-password') {
-                                  showSnack(context,
-                                      'Wrong password provided for that user');
-                                }
-                              } catch (e) {
-                                showSnack(context, '$e');
-                              }
-                              setState(() => isLoading = false);
-                            }
-                          },
+                          on_tap: signIn,
                           label: 'Login',
                           width: width,
                         ),
                         //user don't have an account?
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Don\'t have an account?',
-                              style: TextStyle(
-                                color: Colors.grey.withOpacity(.7),
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            adabtiveEmptyButton(
-                              on_tap: () =>
-                                  Navigator.of(context).pushReplacementNamed(
-                                registerPage.id,
-                              ),
-                              widget: Text("Sign up"),
-                            ),
-                          ],
-                        )
+                        user_dont_have_an_account(),
                       ],
                     ),
                   ),
@@ -163,55 +115,25 @@ class _loginPageState extends State<loginPage> {
                               //name
                               customTextField(
                                 hint: 'Name',
-                                on_changed: (String value) {
-                                  name = value;
-                                },
+                                on_changed: (String value) => name = value,
                               ),
                               SizedBox(height: height * .05),
                               //email
                               customTextField(
                                 hint: 'Email',
-                                on_changed: (String value) {
-                                  email = value;
-                                },
+                                on_changed: (String value) => email = value,
                               ),
                               SizedBox(height: height * .05),
                               //password
                               customTextField(
                                 hint: 'Password',
-                                on_changed: (String value) {
-                                  password = value;
-                                },
+                                on_changed: (String value) => password = value,
                               ),
                               SizedBox(height: height * .05),
                               //login button
                               customButton(
                                 height: height,
-                                on_tap: () async {
-                                  if (_key.currentState!.validate()) {
-                                    setState(() => isLoading = true);
-                                    try {
-                                      await signInUser(email, password);
-                                      showSnack(context, 'Register Success');
-                                      Navigator.of(context)
-                                          .pushReplacementNamed(
-                                        chatPage.id,
-                                        arguments: {'name': name, kId: email},
-                                      );
-                                    } on FirebaseAuthException catch (e) {
-                                      if (e.code == 'user-not-found') {
-                                        showSnack(context,
-                                            'No user found for that email');
-                                      } else if (e.code == 'wrong-password') {
-                                        showSnack(context,
-                                            'Wrong password provided for that user');
-                                      }
-                                    } catch (e) {
-                                      showSnack(context, '$e');
-                                    }
-                                    setState(() => isLoading = false);
-                                  }
-                                },
+                                on_tap: signIn,
                                 label: 'Login',
                                 width: width,
                               ),
@@ -219,25 +141,7 @@ class _loginPageState extends State<loginPage> {
                               //user don't have an account?
                               FittedBox(
                                 fit: BoxFit.scaleDown,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'Don\'t have an account?',
-                                      style: TextStyle(
-                                        color: Colors.grey.withOpacity(.7),
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    adabtiveEmptyButton(
-                                      on_tap: () => Navigator.of(context)
-                                          .pushReplacementNamed(
-                                        registerPage.id,
-                                      ),
-                                      widget: Text("Sign up"),
-                                    ),
-                                  ],
-                                ),
+                                child: user_dont_have_an_account(),
                               )
                             ],
                           ),
@@ -273,74 +177,27 @@ class _loginPageState extends State<loginPage> {
                         //name
                         customTextField(
                           hint: 'Name',
-                          on_changed: (String value) {
-                            name = value;
-                          },
+                          on_changed: (String value) => name = value,
                         ),
                         //email
                         customTextField(
                           hint: 'Email',
-                          on_changed: (String value) {
-                            email = value;
-                          },
+                          on_changed: (String value) => email = value,
                         ),
                         //password
                         customTextField(
                           hint: 'Password',
-                          on_changed: (String value) {
-                            password = value;
-                          },
+                          on_changed: (String value) => password = value,
                         ),
                         //login button
                         customButton(
                           height: height,
-                          on_tap: () async {
-                            if (_key.currentState!.validate()) {
-                              setState(() => isLoading = true);
-                              try {
-                                await signInUser(email, password);
-                                showSnack(context, 'Register Success');
-                                Navigator.of(context).pushReplacementNamed(
-                                  chatPage.id,
-                                  arguments: {'name': name, kId: email},
-                                );
-                              } on FirebaseAuthException catch (e) {
-                                if (e.code == 'user-not-found') {
-                                  showSnack(
-                                      context, 'No user found for that email');
-                                } else if (e.code == 'wrong-password') {
-                                  showSnack(context,
-                                      'Wrong password provided for that user');
-                                }
-                              } catch (e) {
-                                showSnack(context, '$e');
-                              }
-                              setState(() => isLoading = false);
-                            }
-                          },
+                          on_tap: signIn,
                           label: 'Login',
                           width: width,
                         ),
                         //user don't have an account?
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Don\'t have an account?',
-                              style: TextStyle(
-                                color: Colors.grey.withOpacity(.7),
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            adabtiveEmptyButton(
-                              on_tap: () =>
-                                  Navigator.of(context).pushReplacementNamed(
-                                registerPage.id,
-                              ),
-                              widget: Text("Sign up"),
-                            ),
-                          ],
-                        )
+                        user_dont_have_an_account(),
                       ],
                     ),
                   ),
@@ -375,55 +232,25 @@ class _loginPageState extends State<loginPage> {
                               //name
                               customTextField(
                                 hint: 'Name',
-                                on_changed: (String value) {
-                                  name = value;
-                                },
+                                on_changed: (String value) => name = value,
                               ),
                               SizedBox(height: height * .05),
                               //email
                               customTextField(
                                 hint: 'Email',
-                                on_changed: (String value) {
-                                  email = value;
-                                },
+                                on_changed: (String value) => email = value,
                               ),
                               SizedBox(height: height * .05),
                               //password
                               customTextField(
                                 hint: 'Password',
-                                on_changed: (String value) {
-                                  password = value;
-                                },
+                                on_changed: (String value) => password = value,
                               ),
                               SizedBox(height: height * .05),
                               //login button
                               customButton(
                                 height: height,
-                                on_tap: () async {
-                                  if (_key.currentState!.validate()) {
-                                    setState(() => isLoading = true);
-                                    try {
-                                      await signInUser(email, password);
-                                      showSnack(context, 'Register Success');
-                                      Navigator.of(context)
-                                          .pushReplacementNamed(
-                                        chatPage.id,
-                                        arguments: {'name': name, kId: email},
-                                      );
-                                    } on FirebaseAuthException catch (e) {
-                                      if (e.code == 'user-not-found') {
-                                        showSnack(context,
-                                            'No user found for that email');
-                                      } else if (e.code == 'wrong-password') {
-                                        showSnack(context,
-                                            'Wrong password provided for that user');
-                                      }
-                                    } catch (e) {
-                                      showSnack(context, '$e');
-                                    }
-                                    setState(() => isLoading = false);
-                                  }
-                                },
+                                on_tap: signIn,
                                 label: 'Login',
                                 width: width,
                               ),
@@ -431,25 +258,7 @@ class _loginPageState extends State<loginPage> {
                               //user don't have an account?
                               FittedBox(
                                 fit: BoxFit.scaleDown,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'Don\'t have an account?',
-                                      style: TextStyle(
-                                        color: Colors.grey.withOpacity(.7),
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    adabtiveEmptyButton(
-                                      on_tap: () => Navigator.of(context)
-                                          .pushReplacementNamed(
-                                        registerPage.id,
-                                      ),
-                                      widget: Text("Sign up"),
-                                    ),
-                                  ],
-                                ),
+                                child: user_dont_have_an_account(),
                               )
                             ],
                           ),
@@ -464,5 +273,29 @@ class _loginPageState extends State<loginPage> {
         }
       },
     );
+  }
+
+//signIn method
+  signIn() async {
+    if (_key.currentState!.validate()) {
+      setState(() => isLoading = true);
+      try {
+        await Service().signInUser(email, password);
+        showSnack(context, 'Register Success');
+        Navigator.of(context).pushReplacementNamed(
+          chatPage.id,
+          arguments: {'name': name, kId: email},
+        );
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'user-not-found') {
+          showSnack(context, 'No user found for that email');
+        } else if (e.code == 'wrong-password') {
+          showSnack(context, 'Wrong password provided for that user');
+        }
+      } catch (e) {
+        showSnack(context, '$e');
+      }
+      setState(() => isLoading = false);
+    }
   }
 }

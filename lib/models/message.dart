@@ -1,4 +1,4 @@
-import 'package:chat_with_flutter/constants.dart';
+import '../constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Message {
@@ -6,11 +6,9 @@ class Message {
   String email;
   Timestamp date;
   Message({required this.message, required this.email, required this.date});
-  factory Message.fromJson(jsonData) {
-    return Message(
-      message: jsonData[kMessage],
-      email: jsonData[kId],
-      date: jsonData[createdAt],
-    );
-  }
+  factory Message.fromJson(jsonData) => Message(
+        message: jsonData[kMessage],
+        email: jsonData[kId],
+        date: jsonData[createdAt],
+      );
 }
